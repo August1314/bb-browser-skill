@@ -28,6 +28,14 @@ npx -y bb-browser --mcp
 - Works as both a human CLI and an MCP bridge for agent runtimes
 - Documents the real quirks of current `bb-browser` behavior instead of hiding them
 
+## Preview
+
+![bb-browser Skill preview](./assets/social-preview.png)
+
+- **Site-first**: start with `bb-browser site ...` when an adapter already exists
+- **Real browser state**: reuse the user's actual logged-in browser instead of booting a fake automation profile
+- **MCP-ready**: expose the same workflow to Codex, Claude Code, Cursor, and other MCP-capable runtimes
+
 ## Why this exists
 
 Most browser automation stacks start from a clean browser profile. That is great for testing, but awkward for agent work on real websites.
@@ -76,7 +84,15 @@ If your goal is UI testing, use Playwright. If your goal is letting an agent wor
 npm install -g bb-browser
 ```
 
-### 2. Copy this skill into Codex
+### 2. Install this repository into your agent setup
+
+| Runtime | Recommended setup | What to do |
+|---|---|---|
+| Codex | Local skill + optional MCP | Copy this repo to `~/.codex/skills/bb-browser`, then use the skill directly. |
+| Claude Code | MCP-first + repo as reference | Use `bb-browser --mcp` in your MCP config, and keep this repo for workflow docs. |
+| Cursor | MCP-first + repo as reference | Add `bb-browser --mcp` to Cursor MCP settings, and use this repo for prompts and operator guidance. |
+
+### 3. Codex setup
 
 ```bash
 mkdir -p "$HOME/.codex/skills"
@@ -89,7 +105,45 @@ The skill name is `bb-browser`, so the target directory should end up as:
 ~/.codex/skills/bb-browser
 ```
 
-### 3. Other agents
+### 4. Claude Code setup
+
+Add `bb-browser` as an MCP server:
+
+```json
+{
+  "mcpServers": {
+    "bb-browser": {
+      "command": "npx",
+      "args": ["-y", "bb-browser", "--mcp"]
+    }
+  }
+}
+```
+
+Use this repository as the skill-style operating guide for:
+
+- `site`-first workflows
+- tab bootstrap and page reads
+- troubleshooting current `bb-browser` quirks
+
+### 5. Cursor setup
+
+Use the same MCP server entry in Cursor's MCP configuration:
+
+```json
+{
+  "mcpServers": {
+    "bb-browser": {
+      "command": "npx",
+      "args": ["-y", "bb-browser", "--mcp"]
+    }
+  }
+}
+```
+
+Then keep this repository nearby as the operator guide for command selection and troubleshooting.
+
+### 6. Reusing this repository in other runtimes
 
 For Claude Code, Cursor, or other agent setups, you can reuse the same repository structure:
 
