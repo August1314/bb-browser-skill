@@ -16,7 +16,7 @@ This repository is documentation-first, so a release is mostly about verifying e
   - `mcp`
   - `browser-automation`
   - `chrome-devtools-protocol`
-- Upload `assets/bb-browser.svg` or a derived PNG as the social preview image
+- Upload `assets/social-preview.png` as the GitHub social preview image
 
 ## Functional verification
 

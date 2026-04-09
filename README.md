@@ -1,10 +1,32 @@
-# bb-browser Skill
+# bb-browser Skill for AI Agents
 
-![bb-browser Skill banner](./assets/bb-browser.svg)
+![bb-browser Skill cover](./assets/social-preview.png)
 
-Use `bb-browser` with Codex, Claude Code, Cursor, and other agents to turn your real browser session into a structured tool surface.
+Turn your real Chrome session into an agent tool surface.
 
-This repository packages a reusable cross-agent skill for [bb-browser](https://github.com/epiral/bb-browser): a CLI + MCP bridge that lets AI agents reuse your real browser login state for site queries, authenticated fetches, page interaction, and Chrome-backed debugging.
+This repository packages a reusable cross-agent skill for [bb-browser](https://github.com/epiral/bb-browser): a CLI + MCP bridge that lets Codex, Claude Code, Cursor, and similar agents reuse your real browser login state for `site` queries, authenticated fetches, page interaction, and Chrome-backed debugging.
+
+## Hero examples
+
+```bash
+# query a real site adapter first
+bb-browser site zhihu/hot
+
+# bootstrap a real browser tab and read from it
+bb-browser tab new "https://example.com" --json
+bb-browser wait 1500 --tab <tab> --json
+bb-browser get title --tab <tab> --json
+
+# expose bb-browser to an agent runtime
+npx -y bb-browser --mcp
+```
+
+## Why people star this
+
+- Real browser login state, not a throwaway automation profile
+- `site`-first workflow that often beats click-heavy browser automation
+- Works as both a human CLI and an MCP bridge for agent runtimes
+- Documents the real quirks of current `bb-browser` behavior instead of hiding them
 
 ## Why this exists
 
@@ -36,6 +58,15 @@ Playwright is excellent for deterministic testing and isolated automation. This 
 - With `bb-browser`, the first question is: "does a `site` adapter already solve this?"
 
 If your goal is UI testing, use Playwright. If your goal is letting an agent work through your real browser session, use `bb-browser`.
+
+## What you get
+
+| Need | Recommended path |
+|---|---|
+| Structured data from supported sites | `bb-browser site ...` |
+| Real logged-in page inspection | `tab new` -> `wait` -> `snapshot/get` |
+| Authenticated network introspection | `fetch` / `network` |
+| Agent integration | `bb-browser --mcp` |
 
 ## Install
 
@@ -184,6 +215,8 @@ bb-browser-skill/
 ├── assets/
 │   ├── bb-browser-small.svg
 │   └── bb-browser.svg
+│   ├── social-preview.svg
+│   └── social-preview.png
 ├── examples/
 │   └── prompts.md
 └── references/
